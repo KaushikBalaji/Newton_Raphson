@@ -1,59 +1,44 @@
 `timescale 1ns/1ps
 
-module NR_stage_pipeline #(
-    parameter N = 16, 
-    parameter FRAC = 8
-)(
-    input clk,
-    input rst,
-    input [N-1:0] a_in,      // Input 'a'
-    input [N-1:0] x_in,      // Input 'xi'
-    output reg [N-1:0] x_out // Output 'xi+1'
+module NR_stage #(parameter N = 8, parameter W = 2*N)(
+	input clk,
+	input rst,
+    input  signed [W-1:0] x_in,
+    input  signed [W-1:0] a,
+    output reg  signed [W-1:0] x_out
 );
 
-    // Internal signed signals
-    wire signed [N-1:0] const3 = 3 <<< FRAC;
-    
-    // Stage 1 Registers: Compute x^2
-    reg signed [N-1:0] x_s1, a_s1;
-    reg signed [2*N-1:0] mul_x2;
-    
-    always @(posedge clk) begin
-        x_s1   <= x_in;
-        a_s1   <= a_in;
-        mul_x2 <= $signed(x_in) * $signed(x_in);
-    end
+	
+	
+    wire signed [2*W-1:0] x_sq_full;
+    assign x_sq_full = x_in * x_in;
 
-    // Stage 2 Registers: Compute a * x^2
-    reg signed [N-1:0] x_s2, t_x2;
-    reg signed [2*N-1:0] mul_ax2;
-    
-    always @(posedge clk) begin
-        x_s2    <= x_s1;
-        t_x2    <= mul_x2[FRAC +: N]; // Truncate to N bits
-        mul_ax2 <= $signed(a_s1) * $signed(mul_x2[FRAC +: N]);
-    end
+    wire signed [W-1:0] x_sq;
+    wire signed [2*W-1:0] x_sq_shifted;
+    assign x_sq_shifted = x_sq_full >>> N;
 
-    // Stage 3 Registers: Compute (3 - ax^2)
-    reg signed [N-1:0] x_s3, t_3_ax2;
-    
-    always @(posedge clk) begin
-        x_s3      <= x_s2;
-        t_3_ax2   <= const3 - mul_ax2[FRAC +: N];
-    end
+    assign x_sq = x_sq_shifted[W-1:0];
+    wire signed [2*W-1:0] ax2_full;
+    assign ax2_full = a * x_sq;
 
-    // Stage 4 Registers: Compute x * (3 - ax^2)
-    reg signed [2*N-1:0] mul_final;
-    
-    always @(posedge clk) begin
-        mul_final <= $signed(x_s3) * $signed(t_3_ax2);
-    end
+    wire signed [W-1:0] ax2;
+    wire signed [2*W-1:0] ax2_shifted;
+    assign ax2_shifted = ax2_full >>> N;
+    assign ax2 = ax2_shifted[W-1:0];
 
-    // Stage 5: Final Result (x/2) * (3 - ax^2)
-    always @(posedge clk) begin
-        // (mul_final >> FRAC) is the multiplication result
-        // The additional >> 1 performs the division by 2
-        x_out <= mul_final[FRAC+1 +: N]; 
-    end
+
+    wire signed [W-1:0] term;
+    assign term = (3 <<< N) - ax2;
+
+    wire signed [2*W-1:0] mult_full;
+    assign mult_full = x_in * term;
+
+    wire signed [W-1:0] mult;
+    wire signed [2*W-1:0] mult_shifted;
+    assign mult_shifted = mult_full >>> N;
+    assign mult = mult_shifted[W-1:0];
+
+
+    assign x_out = mult >>> 1;
 
 endmodule

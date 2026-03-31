@@ -1,0 +1,68 @@
+$date
+	Mon Mar 23 23:17:32 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_nr_stage $end
+$var wire 16 ! x_out [15:0] $end
+$var reg 16 " a [15:0] $end
+$var reg 16 # x_in [15:0] $end
+$scope module dut $end
+$var wire 16 $ a [15:0] $end
+$var wire 16 % x_in [15:0] $end
+$var wire 32 & x_sq_full [31:0] $end
+$var wire 16 ' x_sq [15:0] $end
+$var wire 16 ( x_out [15:0] $end
+$var wire 16 ) three_minus_ax2 [15:0] $end
+$var wire 16 * mult [15:0] $end
+$var wire 32 + final_mult_full [31:0] $end
+$var wire 32 , ax2_full [31:0] $end
+$var wire 16 - ax2 [15:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b100100 -
+b10010000000000 ,
+b1000111011111000 +
+b10001110 *
+b1011011100 )
+b1000111 (
+b1001 '
+b100111000100 &
+b110010 %
+b10000000000 $
+b110010 #
+b10000000000 "
+b1000111 !
+$end
+#50000
+b1010110100 )
+b1001100 -
+b1011111 !
+b1011111 (
+b100110000000000 ,
+b10011 '
+b10111111 *
+b1001110110001 &
+b1011111111101100 +
+b1000111 #
+b1000111 %
+#100000
+b1001110100 )
+b10001100 -
+b1110100 !
+b1110100 (
+b1000110000000000 ,
+b100011 '
+b11101001 *
+b10001101000001 &
+b1110100100001100 +
+b1011111 #
+b1011111 %
+#150000
