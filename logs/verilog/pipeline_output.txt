@@ -1,0 +1,14 @@
+VCD info: dumpfile nr_pipeline.vcd opened for output.
+Time:               445000 | Input A:     8 | Start Value:  1500 | Result:  1449
+Time:               455000 | Input A:    16 | Start Value:  1000 | Result:  1024
+Time:               465000 | Input A:    32 | Start Value:   800 | Result:   725
+Time:               475000 | Input A:    64 | Start Value:   600 | Result:   511
+Time:               485000 | Input A:   128 | Start Value:   400 | Result:   362
+Time:               495000 | Input A:   256 | Start Value:   256 | Result:   256
+Time:               505000 | Input A:   512 | Start Value:   180 | Result:   181
+Time:               515000 | Input A:  1024 | Start Value:   128 | Result:   128
+Time:               525000 | Input A:  2048 | Start Value:    90 | Result:    91
+Time:               535000 | Input A:  4096 | Start Value:    64 | Result:    64
+Time:               545000 | Input A:  8192 | Start Value:    45 | Result:    47
+Time:               555000 | Input A: 16384 | Start Value:    32 | Result:    32
+Time:               565000 | Input A: 32768 | Start Value:    22 | Result:    27

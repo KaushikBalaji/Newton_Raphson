@@ -1,0 +1,10 @@
+VCD info: dumpfile lod.vcd opened for output.
+Time:                10000 | Input A:  1024 | LOD Output:  1024 
+Time:                20000 | Input A:   512 | LOD Output:   512 
+Time:                30000 | Input A:   256 | LOD Output:   256 
+Time:                40000 | Input A:    64 | LOD Output:    64 
+Time:                50000 | Input A:  2048 | LOD Output:  2048 
+Time:                60000 | Input A:  4096 | LOD Output:  4096 
+Time:                70000 | Input A: 16384 | LOD Output: 16384 
+Time:                80000 | Input A: 25600 | LOD Output: 16384 
+Time:                90000 | Input A: 57600 | LOD Output: 32768 

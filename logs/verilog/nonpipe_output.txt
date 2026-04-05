@@ -1,0 +1,4 @@
+VCD info: dumpfile nr_nonpipe.vcd opened for output.
+TEST 1 (a=4.0, x0=0.4): Result =   126 -- Expected: 128
+TEST 2 (a=8.0, x0=0.33): Result =    91 -- Expected: 91
+TEST 3 (a=2.0, x0=0.7): Result =   181 -- Expected: 181
