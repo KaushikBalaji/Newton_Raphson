@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module NR_stage_pipeline #(parameter N = 8, parameter W = 16)(
     input  clk, rst,
     input [W-1:0] x_in,

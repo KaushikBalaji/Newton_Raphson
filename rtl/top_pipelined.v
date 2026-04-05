@@ -28,8 +28,10 @@ module top_pipelined #(
             );
             reg signed [W-1:0] d1, d2, d3;
             always @(posedge clk) begin
-                if (rst) {d1, d2, d3} <= 0;
-                else     {d3, d2, d1} <= {d2, d1, a_bus[i]};
+                if (rst) 
+                    {d1, d2, d3} <= 0;
+                else     
+                    {d3, d2, d1} <= {d2, d1, a_bus[i]};
             end
             assign a_bus[i+1] = d3;
         end

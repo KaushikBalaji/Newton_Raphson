@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module tb_top;
+module tb_nonpipeline;
 
     parameter N = 8;
     parameter W = 16;
@@ -44,7 +44,7 @@ module tb_top;
         x0 = 16'd50;  // 0.33 in fixed-point
         #(ITER * 10); // Wait for all iterations to complete
 
-        // repeat(ITER+2) @(posedge clk);
+        repeat(ITER+2) @(posedge clk);
         $display("TEST 2 (a=8.0, x0=0.33): Result = %d -- Expected: 91", result);
 
         
@@ -53,7 +53,7 @@ module tb_top;
         x0 = 16'd120; // 0.7 in fixed-point
         #(ITER * 10); // Wait for all iterations to complete
 
-        // repeat(ITER+2) @(posedge clk);
+        repeat(ITER+2) @(posedge clk);
         $display("TEST 3 (a=2.0, x0=0.7): Result = %d -- Expected: 181", result);
 
         $finish;
@@ -61,8 +61,8 @@ module tb_top;
 
 
     initial begin
-        $dumpfile("nr_pipe.vcd");   // output file
-        $dumpvars(0, tb_top); // dump entire testbench hierarchy
+        $dumpfile("nr_nonpipe.vcd");   // output file
+        $dumpvars(0, tb_nonpipeline); // dump entire testbench hierarchy
     end
 
 

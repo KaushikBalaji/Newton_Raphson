@@ -4,7 +4,7 @@ module tb_pipeline;
 
     parameter N = 8;
     parameter W = 16;
-    parameter N_ITERS = 4;
+    parameter N_ITERS = 3;
     localparam LATENCY = N_ITERS * 3;
 
     reg clk, rst;
@@ -37,23 +37,22 @@ module tb_pipeline;
         rst = 0;
         
         // Feeding continuous stream
-        @(posedge clk); a_in <= 16'd1024; x0_in <= 16'd128; // Exp 128
-        @(posedge clk); a_in <= 16'd512;  x0_in <= 16'd181; // Exp 181
-        @(posedge clk); a_in <= 16'd256;  x0_in <= 16'd256; // Exp 256
-        @(posedge clk); a_in <= 16'd64;   x0_in <= 16'd512; // Exp 512
-        @(posedge clk); a_in <= 16'd2048; x0_in <= 16'd90;  // Exp 90
-        
-        @(posedge clk); a_in <= 16'd4096; x0_in <= 16'd64;  // Exp 64
-		@(posedge clk); a_in <= 16'd16384; x0_in <= 16'd32;	// Exp 32
-		@(posedge clk); a_in <= 16'd25600; x0_in <= 16'd26;	// Exp 26
-		@(posedge clk); a_in <= 16'd36864; x0_in <= 16'd21;	// Exp 21
-		@(posedge clk); a_in <= 16'd57600; x0_in <= 16'd17;	// Exp 17
+        @(posedge clk); a_in <= 16'd1024; x0_in <= 16'd100; // Exp 128
+        @(posedge clk); a_in <= 16'd512;  x0_in <= 16'd150; // Exp 181
+        @(posedge clk); a_in <= 16'd256;  x0_in <= 16'd200; // Exp 256
+        @(posedge clk); a_in <= 16'd64;   x0_in <= 16'd470; // Exp 512
+        @(posedge clk); a_in <= 16'd2048; x0_in <= 16'd70;  // Exp 90 
+        @(posedge clk); a_in <= 16'd4096; x0_in <= 16'd50;  // Exp 64
+		@(posedge clk); a_in <= 16'd16384; x0_in <= 16'd20;	// Exp 32
+		@(posedge clk); a_in <= 16'd25600; x0_in <= 16'd15;	// Exp 26
+		@(posedge clk); a_in <= 16'd36864; x0_in <= 16'd15;	// Exp 21
+		@(posedge clk); a_in <= 16'd57600; x0_in <= 16'd10;	// Exp 17
         @(posedge clk); a_in <= 0; x0_in <= 0;
         
         repeat(LATENCY + 5) begin
             if (result != 0) begin
-                $display("Time: %t | Input A: %d | Result: %d", 
-                         $time, a_history[LATENCY - 1], result);
+                $display("Time: %t | Input A: %d | Start Value: %d | Result: %d", 
+                         $time, a_history[LATENCY - 1], x0_history[LATENCY - 1], result);
             end
             @(posedge clk);
         end
