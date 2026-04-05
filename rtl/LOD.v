@@ -1,22 +1,24 @@
 `timescale 1ns/1ps
 
-module LOD #(parameter N = 16)(
-    input  [N-1:0] x_in,
-    output [N-1:0] x_out
+module LOD #(parameter W = 16)(
+    input  [W-1:0] x_in,
+    output [W-1:0] x_out
 );
 
-    wire [N-1:0] BR_x;
-    wire [N-1:0] NOT_out;
-    wire [N-1:0] adder_out;
-    wire [N-1:0] AND_out;
+    wire [W-1:0] BR_x;
+    wire [W-1:0] NOT_out;
+    wire [W-1:0] adder_out;
+    wire [W-1:0] AND_out;
 
     // step 1: bit reversal of x_in
-    genvar i;
-    generate
-        for(i = 0; i < N; i = i+1) begin
-            assign BR_x[N-i-1] = x_in[i];
-        end
-    endgenerate
+    // genvar i;
+    // generate
+    //     for(i = 0; i < W; i = i+1) begin
+    //         assign BR_x[W-i-1] = x_in[i];
+    //     end
+    // endgenerate
+
+    assign BR_x = bit_reverse(x_in); 
 
     // step 2: NOT of BR_x
     assign NOT_out = ~BR_x;
@@ -28,10 +30,23 @@ module LOD #(parameter N = 16)(
     assign AND_out = BR_x & adder_out;
 
     // step 5: bit reverse AND_out to get LOD(x_in)
-    generate
-        for(i = 0; i < N; i = i+1) begin
-            assign x_out[N-i-1] = AND_out[i];
+    // generate
+    //     for(i = 0; i < W; i = i+1) begin
+    //         assign x_out[W-i-1] = AND_out[i];
+    //     end
+    // endgenerate
+
+    assign x_out = bit_reverse(AND_out);
+
+
+
+    function [W-1:0] bit_reverse;
+        input [W-1:0] in;
+        integer k;
+        begin
+            for (k = 0; k < W; k = k + 1)
+                bit_reverse[k] = in[W-1-k];
         end
-    endgenerate
+    endfunction
 
 endmodule

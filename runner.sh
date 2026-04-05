@@ -1,20 +1,39 @@
-echo "Running Newton-Raphson testbench simulation..."
+#!/bin/bash
 
-# Run the Verilog testbench simulation using Icarus Verilog
+echo "Running Newton-Raphson simulation..."
 
-# Runner for pipelined version
-# iverilog rtl/NR_stage_pipeline.v rtl/top_pipelined.v sim/tb_pipeline.v -o nr_pipeline
-# vvp nr_pipeline
-# gtkwave nr_pipeline.vcd
+case "$1" in
 
+    pipe)
+        echo "Running PIPELINED version..."
+        iverilog rtl/NR_stage_pipeline.v rtl/top_pipelined.v sim/tb_pipeline.v -o nr_pipeline
+        vvp nr_pipeline
+        # gtkwave nr_pipeline.vcd
+        ;;
 
-# Runner for non-pipelined version
-# iverilog -o nr_nonpipe rtl/NR_stage.v rtl/inv_sqr_root.v sim/tb_nonpipeline.v
-# vvp nr_nonpipe
-# gtkwave nr_nonpipe.vcd
+    nopipe)
+        echo "Running NON-PIPELINED version..."
+        iverilog -o nr_nonpipe rtl/NR_stage.v rtl/inv_sqr_root.v sim/tb_nonpipeline.v
+        vvp nr_nonpipe
+        # gtkwave nr_nonpipe.vcd
+        ;;
 
+    lod)
+        echo "Running LOD test..."
+        iverilog -o lod rtl/LOD.v sim/tb_lod.v
+        vvp lod
+        ;;
 
-# LOD module checker
-iverilog -o lod rtl/LOD.v rtl/initial_approx.v sim/tb_approx.v 
-vvp lod
-# gtkwave lod.vcd
+    approx)
+        echo "Running Approximation test..."
+        iverilog -o approx rtl/LOD.v rtl/initial_approx.v sim/tb_approx.v 
+        vvp approx
+        # gtkwave approx.vcd
+        ;;
+
+    *)
+        echo "Usage: $0 {pipe|nopipe|lod|approx}"
+        exit 1
+        ;;
+
+esac
