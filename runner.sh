@@ -44,8 +44,18 @@ case "$1" in
         # gtkwave out/vcd/approx.vcd
         ;;
 
+    top)
+        echo "Running Top-level test..."
+        iverilog -o top rtl/top_InvSqrt.v rtl/initial_approx.v rtl/top_pipelined.v rtl/LOD.v rtl/NR_stage_pipeline.v sim/tb_InvSqrt.v 
+        vvp top > logs/verilog/top_output.txt
+        cat logs/verilog/top_output.txt
+        mv top.vcd out/vcd/
+        mv top out/bin/
+        # gtkwave out/vcd/top.vcd
+        ;;
+
     *)
-        echo "Usage: $0 {pipe|nopipe|lod|approx}"
+        echo "Usage: $0 {pipe|nopipe|lod|approx|top}"
         exit 1
         ;;
 

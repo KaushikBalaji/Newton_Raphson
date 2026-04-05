@@ -13,6 +13,7 @@ module tb_approx;
     always #5 clk = ~clk;
 
     initial_approx #(N, W) dut (
+        .clk(clk),
         .a_in(a_in),
         .approx_out(approx_out)
     );

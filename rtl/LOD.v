@@ -38,8 +38,6 @@ module LOD #(parameter W = 16)(
 
     assign x_out = bit_reverse(AND_out);
 
-
-
     function [W-1:0] bit_reverse;
         input [W-1:0] in;
         integer k;
@@ -48,5 +46,15 @@ module LOD #(parameter W = 16)(
                 bit_reverse[k] = in[W-1-k];
         end
     endfunction
+
+
+    // integer i;
+    // always @(*) begin
+    //     x_out = 0;
+    //     for(i = 0; i < W; i = i + 1) begin
+    //         if (x_in[i])
+    //             x_out = i;
+    //     end
+    // end
 
 endmodule

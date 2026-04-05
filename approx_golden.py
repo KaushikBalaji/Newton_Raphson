@@ -1,4 +1,3 @@
-# initial_approx_golden.py
 
 W = 16
 N = 8
