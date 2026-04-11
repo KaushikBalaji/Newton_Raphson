@@ -2,7 +2,8 @@
 
 module LOD #(parameter W = 16)(
     input  [W-1:0] x_in,
-    output [W-1:0] x_out
+    output [W-1:0] x_out,
+    output reg [$clog2(W)-1:0] index_out
 );
 
     wire [W-1:0] BR_x;
@@ -48,13 +49,14 @@ module LOD #(parameter W = 16)(
     endfunction
 
 
-    // integer i;
-    // always @(*) begin
-    //     x_out = 0;
-    //     for(i = 0; i < W; i = i + 1) begin
-    //         if (x_in[i])
-    //             x_out = i;
-    //     end
-    // end
+    integer i;
+
+    always @(*) begin
+        index_out = 0;
+        for(i = 0; i < W; i = i + 1) begin
+            if (x_in[i])
+                index_out = i;
+        end
+    end
 
 endmodule

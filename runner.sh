@@ -46,6 +46,7 @@ case "$1" in
 
     top)
         echo "Running Top-level test..."
+        python NR_golden.py
         iverilog -o top rtl/top_InvSqrt.v rtl/initial_approx.v rtl/top_pipelined.v rtl/LOD.v rtl/NR_stage_pipeline.v sim/tb_InvSqrt.v 
         vvp top > logs/verilog/top_output.txt
         cat logs/verilog/top_output.txt

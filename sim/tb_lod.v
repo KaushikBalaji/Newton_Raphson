@@ -6,6 +6,7 @@ module tb_lod;
     reg clk, rst;
     reg [N-1:0] x_in;
     wire [N-1:0] x_out;
+    wire [$clog2(N)-1:0] index_out;
     
 
     initial clk = 0;
@@ -13,7 +14,8 @@ module tb_lod;
 
     LOD #(N) dut (
         .x_in(x_in),
-        .x_out(x_out)
+        .x_out(x_out),
+        .index_out(index_out)
     );
 
     initial begin       
