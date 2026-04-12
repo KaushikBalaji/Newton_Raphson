@@ -46,15 +46,15 @@ case "$1" in
 
     top)
         echo "Running Top-level test..."
-        python3 Inputs_generate.py       # random inputs generated everytime
         # comment and uncomment 2 python runs as needed
 
-        # python3 file with actual 1/math.sqrt values
-        # python3 NR_golden.py
+        # python file with actual 1/math.sqrt values
+        # python NR_golden.py
         # python file with 1/sqrt values with actual NR iterations
-        python3 NR.py
+        python NR.py
         iverilog -o top rtl/top_InvSqrt.v rtl/initial_approx.v rtl/top_pipelined.v rtl/LOD.v rtl/NR_stage_pipeline.v sim/tb_InvSqrt.v 
         vvp top > logs/verilog/top_output.txt
+
         cat logs/verilog/top_output.txt
         python3 diff_checker.py
         mv top.vcd out/vcd/
