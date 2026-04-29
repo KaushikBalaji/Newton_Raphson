@@ -23,7 +23,7 @@ module initial_approx #(parameter N = 8, parameter W = 16) (
 
         for (i = 0; i < W; i = i + 1) begin
             if (lod_out[i]) begin
-                if (i | 1'b0) begin
+                if (i & 1) begin
                     // ODD j
                     approx_raw[N - ((i+1)>>1)] = 1'b1;
                 end else begin

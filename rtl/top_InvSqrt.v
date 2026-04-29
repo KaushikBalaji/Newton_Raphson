@@ -23,8 +23,10 @@ module top_InvSqrt #(
 
     // 2. Delay 'a_in' by 1 cycle to match approx_out's register delay
     always @(posedge clk) begin
-        if (rst) a_delayed <= 0;
-        else     a_delayed <= a_in;
+        if (rst) 
+            a_delayed <= 0;
+        else     
+            a_delayed <= a_in;
     end
 
     // 3. Feed the generated x0 and delayed 'a' into the NR pipeline

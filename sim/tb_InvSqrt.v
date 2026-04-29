@@ -7,7 +7,7 @@ module tb_InvSqrt;
     parameter N_ITERS = 4;
     // Total Latency: 1 (Approx) + (3 * N_ITERS) (Pipeline)
     localparam TOTAL_LATENCY = 1 + (N_ITERS * 3);
-    localparam inputs_count = 33;
+    localparam inputs_count = 200;
     reg clk, rst;
     reg [W-1:0] a_in;
     wire [W-1:0] result;
@@ -27,7 +27,9 @@ module tb_InvSqrt;
         $fclose(inp_file);
 
     end
+    
     initial begin
+        // golden_out_file = $fopen("NR_values.txt", "r");
         golden_out_file = $fopen("NR_golden_values.txt", "r");
         for (i = 0; i < inputs_count; i = i + 1) begin
             r = $fscanf(golden_out_file, "%d\n", golden_mem[i]);
@@ -60,7 +62,6 @@ module tb_InvSqrt;
         @(posedge clk);
 
         // --- Test Stream ---
-
         for (k = 0; k < inputs_count; k = k + 1) begin
             @(posedge clk); 
             a_in <= input_mem[k];
@@ -74,27 +75,39 @@ module tb_InvSqrt;
         $finish;
     end
 
-initial begin
-        out_ptr = 0;
-        
+    integer count_0;
+    integer diff;
+
+	initial begin
+		out_ptr = 0;
         wait (rst == 0);
-        
-        repeat (TOTAL_LATENCY + 2) @(posedge clk);
+        count_0 = 0;
+        repeat (TOTAL_LATENCY + 2) @(posedge clk); 
         
         forever begin
             @(posedge clk);
             if (out_ptr < inputs_count) begin
-                $display("Time: %t | Input A: %d | Result: %d | Golden: %d | Diff: %d", 
+                diff = (result > golden_mem[out_ptr]) ? 
+                    (result - golden_mem[out_ptr]) : 
+                    (golden_mem[out_ptr] - result);
+
+                if (diff == 0)
+                    count_0 = count_0 + 1;
+    
+                $display("Time: %t | Input A: %d | Result: %d | Golden: %d | Diff: %d | Exact Match: %d out of %d", 
                         $time, 
                         a_history[TOTAL_LATENCY-1],
                         result, 
                         golden_mem[out_ptr], 
-                        (result > golden_mem[out_ptr]) ? result - golden_mem[out_ptr] : golden_mem[out_ptr] - result
-                );
+                        diff,
+                        count_0,
+                        inputs_count
+                    );
                 out_ptr = out_ptr + 1;
             end
         end
     end
+
 
     initial begin
         $dumpfile("top.vcd");
