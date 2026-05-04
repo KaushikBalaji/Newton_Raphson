@@ -13,17 +13,17 @@ module top_pipelined #(
 );
 
     wire [W-1:0] x_bus [0:N_ITERS];
-    wire [W-1:0] a_bus [0:N_ITERS];
+    wire [W-1:0] a_pipe [0:N_ITERS];
 
     assign x_bus[0] = x0;
-    assign a_bus[0] = a_in;
+    assign a_pipe[0] = a_in;
 
     genvar i;
     generate
         for (i = 0; i < N_ITERS; i = i + 1) begin : NR_ITER
             NR_stage_pipeline #(N, W) stage_inst (
                 .clk(clk), .rst(rst),
-                .x_in(x_bus[i]), .a_in(a_bus[i]),
+                .x_in(x_bus[i]), .a_in(a_pipe[i]),
                 .x_out(x_bus[i+1])
             );
             reg [W-1:0] a_d1, a_d2, a_d3;
@@ -34,14 +34,14 @@ module top_pipelined #(
                     a_d2 <= 0;
                     a_d3 <= 0;
                 end else begin
-                    a_d1 <= a_bus[i];
+                    a_d1 <= a_pipe[i];
                     a_d2 <= a_d1;
                     a_d3 <= a_d2;
                 end
             end
 
-            assign a_bus[i+1] = a_d3;
-            // assign a_bus[i+1] = d3;
+            assign a_pipe[i+1] = a_d3;
+            // assign a_pipe[i+1] = d3;
         end
     endgenerate
     assign result = x_bus[N_ITERS];
