@@ -8,7 +8,9 @@ NUM_INPUTS = 200
 pre_values = [2**i for i in range(1, N)]
 # pre_values = []
 
-input_values = pre_values
+input_values = pre_values 
+input_values.append(1)
+# input_values.append(100)
 
 while len(set(input_values)) < NUM_INPUTS:
     new_input = random.randint(2, (1 << N) - 1)
