@@ -237,5 +237,12 @@ Vivado timing analysis:
 2. Quake III Arena Fast Inverse Square Root Algorithm,
    id Software source release, 1999.
 
-```
-```
+---
+
+# Contributors
+
+- [Kaushik Balaji](https://www.linkedin.com/in/kaushikbalajims/)  
+M.Tech SoCD, IIT Palakkad
+- [Priyesh Narayana](https://www.linkedin.com/in/priyesh-narayana-54a7982a4/)  
+M.Tech SoCD, IIT Palakkad
+
