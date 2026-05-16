@@ -7,7 +7,7 @@ module tb_InvSqrt;
     parameter N_ITERS = 4;
     // Total Latency: 1 (Approx) + (3 * N_ITERS) (Pipeline)
     localparam TOTAL_LATENCY = 1 + (N_ITERS * 3);
-    localparam inputs_count = 100;
+    localparam inputs_count = 200;
     reg clk, rst;
     reg [W-1:0] a_in;
     wire [W-1:0] result;
