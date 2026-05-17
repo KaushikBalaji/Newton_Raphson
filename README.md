@@ -1,6 +1,6 @@
 # Fast Inverse Square Root using Newton-Raphson (Fixed-Point Verilog)
 
-Hardware implementation of inverse square-root computation using the Newton-Raphson iterative method in Verilog/SystemVerilog.
+Hardware implementation of inverse square-root computation using the Newton-Raphson iterative method in Verilog. This was done as a mini-project for Course **EE5516** (VLSI Architectures for Signal Processing and Machine Learning) at IIT Palakkad
 
 The project implements a fixed-point pipelined inverse square-root architecture using:
 - Leading One Detector (LOD) based initial approximation
@@ -14,48 +14,65 @@ The project implements a fixed-point pipelined inverse square-root architecture 
 
 - Fully pipelined architecture
 - Parameterizable Q-format precision
-- Q8.8 and Q16.16 support
+- QN.N format support
 - Python golden reference model
-- Automatic test input generation
-- Randomized verification support
+- Automatic test input generation with Random inputs and corner cases included
 - VCD waveform generation
-- Vivado timing analysis support
 
 ---
 
 # Directory Structure
 
 ```text
-.
-├── RTL/
-│   ├── LOD.v
-│   ├── initial_approx.v
-│   ├── NR_stage_pipeline.v
-│   ├── top_pipelined.v
-│   ├── top_InvSqrt.v
-│   └── tb_InvSqrt.v
-│
-├── Python/
-│   ├── generate_inputs.py
-│   ├── golden_model.py
-│   └── compare_results.py
-│
-├── Scripts/
-│   ├── run_q8_8.sh
-│   ├── run_q16_16.sh
-│   └── clean.sh
-│
-├── Inputs/
-│   ├── NR_inputs.txt
-│   └── NR_golden_values.txt
-│
-├── Waves/
-│   └── top.vcd
-│
-├── Report/
-│   └── report.pdf
-│
-└── README.md
+├── 152502010_EndSem_MiniProjectReport.pdf
+├── approx_golden.py
+├── diff_checker.py
+├── Inputs_generate.py
+├── InverseSqrt_golden.py
+├── lod_golden.py
+├── logs
+│   ├── python
+│   │   └── golden_output.txt
+│   └── verilog
+│       ├── approx_output.txt
+│       ├── lod_output.txt
+│       ├── nonpipe_output.txt
+│       ├── pipeline_output.txt
+│       └── top_output.txt
+├── NR_golden.py
+├── NR_golden_values.txt
+├── NR_inputs.txt
+├── NR_inverse_square_root.pdf
+├── out
+│   ├── bin
+│   │   ├── approx
+│   │   ├── lod
+│   │   ├── nr_nonpipe
+│   │   ├── nr_pipeline
+│   │   └── top
+│   └── vcd
+│       ├── approx.vcd
+│       ├── lod.vcd
+│       ├── nr_nonpipe.vcd
+│       ├── nr_pipeline.vcd
+│       └── top.vcd
+├── rtl
+│   ├── initial_approx.v
+│   ├── inv_sqr_root.v
+│   ├── LOD.v
+│   ├── NR_stage_pipeline.v
+│   ├── NR_stage.v
+│   ├── top_InvSqrt.v
+│   └── top_pipelined.v
+├── runner.sh
+└── sim
+    ├── tb_approx.v
+    ├── tb_inv_sqr_root.v
+    ├── tb_InvSqrt.v
+    ├── tb_lod.v
+    ├── tb_nonpipeline.v
+    ├── tb_nr_stage.v
+    └── tb_pipeline.v
 ````
 
 ---
